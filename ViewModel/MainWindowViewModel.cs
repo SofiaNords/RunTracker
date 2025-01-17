@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using RunTracker.Command;
 using RunTracker.Model;
 using RunTracker.Repository;
 using RunTracker.Services;
@@ -46,9 +47,18 @@ namespace RunTracker.ViewModel
         public TimeSpan Time { get; set; }
         public string RunType { get; set; }
 
+        public DelegateCommand AddRunningSessionCommand { get; }
+        public DelegateCommand UpdateRunningSessionCommand { get; }
+        public DelegateCommand DeleteRunningSessionCommand { get; }
+
         public MainWindowViewModel(IConfiguration? configuration)
         {
             _configuration = configuration;
+
+            AddRunningSessionCommand = new DelegateCommand(async _ => await AddRunningSessionAsync());
+            //UpdateRunningSessionCommand = new DelegateCommand(async _ => await UpdateRunningSessionAsync());
+            //DeleteRunningSessionCommand = new DelegateCommand(async _ => await DeleteRunningSessionAsync());
+
             ConnectToDatabase();
             LoadRunningSessions();
         }
@@ -68,6 +78,18 @@ namespace RunTracker.ViewModel
                 RunningSessions.Add(session);
             }
 
+        }
+        private async Task AddRunningSessionAsync()
+        {
+            var newSession = new RunningSession
+            {
+                Date = (DateTime)Date,
+                Distance = Distance,
+                Time = Time,
+                RunType = RunType
+            };
+            await _runningSessionRepository.AddAsync(newSession);
+            await LoadRunningSessions(); // Reload the list after adding
         }
     }
 }
