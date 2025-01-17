@@ -78,6 +78,7 @@ namespace RunTracker.ViewModel
 
             ConnectToDatabase();
             LoadRunningSessions();
+            LoadRunTypes();
         }
 
 
@@ -96,8 +97,18 @@ namespace RunTracker.ViewModel
             {
                 RunningSessions.Add(session);
             }
-
         }
+
+        private async Task LoadRunTypes()
+        {
+            var types = await _runTypeRepository.GetAllAsync();
+            RunTypes.Clear();
+            foreach (var type in types)
+            {
+                RunTypes.Add(type);
+            }
+        }
+
         private async Task AddRunningSessionAsync()
         {
             var newSession = new RunningSession
@@ -142,6 +153,9 @@ namespace RunTracker.ViewModel
                 Name = RunTypeName
             };
             await _runTypeRepository.AddAsync(newType);
+
+            await LoadRunTypes();
         }
+
     }
 }
