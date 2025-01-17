@@ -1,13 +1,7 @@
-﻿using System.Text;
+﻿using Microsoft.Extensions.Configuration;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using RunTracker.ViewModel;
+using System.IO;
 
 namespace RunTracker
 {
@@ -16,9 +10,28 @@ namespace RunTracker
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IConfiguration _configuration;
+        //public IConfiguration Configuration
+        //{
+        //    get { return _configuration; }
+        //    private set; 
+        //}
         public MainWindow()
         {
             InitializeComponent();
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddUserSecrets<MainWindow>();
+
+            _configuration = builder.Build();
+
+            var viewModel = new MainWindowViewModel(_configuration);
+
+            this.DataContext = viewModel;
+
         }
+
+        
     }
 }
