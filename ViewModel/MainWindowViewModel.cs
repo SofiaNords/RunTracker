@@ -60,7 +60,7 @@ namespace RunTracker.ViewModel
             _configuration = configuration;
 
             AddRunningSessionCommand = new DelegateCommand(async _ => await AddRunningSessionAsync());
-            //UpdateRunningSessionCommand = new DelegateCommand(async _ => await UpdateRunningSessionAsync());
+            UpdateRunningSessionCommand = new DelegateCommand(async _ => await UpdateRunningSessionAsync());
             DeleteRunningSessionCommand = new DelegateCommand(async _ => await DeleteRunningSessionAsync());
 
             ConnectToDatabase();
@@ -93,7 +93,22 @@ namespace RunTracker.ViewModel
                 RunType = RunType
             };
             await _runningSessionRepository.AddAsync(newSession);
-            await LoadRunningSessions(); // Reload the list after adding
+            await LoadRunningSessions(); 
+        }
+
+        private async Task UpdateRunningSessionAsync()
+        {
+            if (SelectedRunningSession != null)
+            {
+                SelectedRunningSession.Date = (DateTime)Date;
+                SelectedRunningSession.Distance = Distance;
+                SelectedRunningSession.Time = Time;
+                SelectedRunningSession.RunType = RunType;
+
+                await _runningSessionRepository.UpdateAsync(SelectedRunningSession);
+
+                await LoadRunningSessions();
+            }
         }
 
         private async Task DeleteRunningSessionAsync()
