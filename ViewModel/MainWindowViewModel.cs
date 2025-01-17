@@ -29,15 +29,19 @@ namespace RunTracker.ViewModel
                     _selectedRunningSession = value;
                     RaisePropertyChanged();
 
-                    Date = _selectedRunningSession?.Date;
-                    Distance = (double)(_selectedRunningSession?.Distance);
-                    Time = (TimeSpan)(_selectedRunningSession?.Time);
-                    RunType = _selectedRunningSession?.RunType;
+                    if (_selectedRunningSession != null)
+                    {
+                        // Uppdatera de andra fälten om vi har ett valt pass
+                        Date = _selectedRunningSession.Date;
+                        Distance = _selectedRunningSession.Distance;
+                        Time = _selectedRunningSession.Time;
+                        RunType = _selectedRunningSession.RunType;
 
-                    RaisePropertyChanged(nameof(Date));
-                    RaisePropertyChanged(nameof(Distance));
-                    RaisePropertyChanged(nameof(Time));
-                    RaisePropertyChanged(nameof(RunType));
+                        RaisePropertyChanged(nameof(Date));
+                        RaisePropertyChanged(nameof(Distance));
+                        RaisePropertyChanged(nameof(Time));
+                        RaisePropertyChanged(nameof(RunType));
+                    }
                 }
             }
         }
@@ -57,7 +61,7 @@ namespace RunTracker.ViewModel
 
             AddRunningSessionCommand = new DelegateCommand(async _ => await AddRunningSessionAsync());
             //UpdateRunningSessionCommand = new DelegateCommand(async _ => await UpdateRunningSessionAsync());
-            //DeleteRunningSessionCommand = new DelegateCommand(async _ => await DeleteRunningSessionAsync());
+            DeleteRunningSessionCommand = new DelegateCommand(async _ => await DeleteRunningSessionAsync());
 
             ConnectToDatabase();
             LoadRunningSessions();
@@ -90,6 +94,15 @@ namespace RunTracker.ViewModel
             };
             await _runningSessionRepository.AddAsync(newSession);
             await LoadRunningSessions(); // Reload the list after adding
+        }
+
+        private async Task DeleteRunningSessionAsync()
+        {
+            if (SelectedRunningSession != null)
+            {
+                await _runningSessionRepository.DeleteAsync(SelectedRunningSession.Id);
+                RunningSessions.Remove(SelectedRunningSession);
+            }
         }
     }
 }
