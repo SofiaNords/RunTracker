@@ -7,6 +7,55 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <StackPanel Orientation="Vertical" Margin="10">
+            <TextBlock Text="Registrera nytt löppass" FontWeight="Bold" FontSize="16"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <Label Content="Datum (YYYY-MM-DD):" Width="150"/>
+                <TextBox Text="{Binding Date, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <Label Content="Distans (km):" Width="150"/>
+                <TextBox Text="{Binding Distance, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <Label Content="Tid (hh:mm:ss):" Width="150"/>
+                <TextBox Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <Label Content="Typ av löppass:" Width="150"/>
+                <TextBox Text="{Binding RunType, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+            </StackPanel>
+
+            <Button Content="Lägg till löppass" Command="{Binding AddRunningSessionCommand}" Margin="0,10"/>
+        </StackPanel>
+
+        <ListView x:Name="RunsListView" 
+           Grid.Row="1" 
+           Margin="10" 
+           ItemsSource="{Binding RunningSessions}"
+           SelectedItem="{Binding SelectedRunningSession}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Date}"/>
+                    <GridViewColumn Header="Distans (km)" DisplayMemberBinding="{Binding Distance}"/>
+                    <GridViewColumn Header="Tid" DisplayMemberBinding="{Binding Time}"/>
+                    <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding RunType}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Uppdatera" Command="{Binding UpdateRunningSessionCommand}" Margin="5"/>
+            <Button Content="Ta bort" Command="{Binding DeleteRunningSessionCommand}" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Window>
