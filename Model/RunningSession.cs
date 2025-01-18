@@ -8,6 +8,6 @@ namespace RunTracker.Model
         public DateTime Date { get; set; }
         public double Distance { get; set; }
         public TimeSpan Time { get; set; }
-        public string RunType { get; set; }
+        public RunType RunType { get; set; }
     }
 }

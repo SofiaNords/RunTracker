@@ -4,6 +4,7 @@ using RunTracker.Model;
 using RunTracker.Repository;
 using RunTracker.Services;
 using System.Collections.ObjectModel;
+using System.Windows;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RunTracker.ViewModel
@@ -52,9 +53,9 @@ namespace RunTracker.ViewModel
         public DateTime? Date { get; set; }
         public double Distance { get; set; }
         public TimeSpan Time { get; set; }
-        public string RunType { get; set; }
+        public RunType RunType { get; set; }
 
-        public string RunTypeName { get; set; }
+        public string RunTypeNew { get; set; }
 
         public DelegateCommand AddRunningSessionCommand { get; }
         public DelegateCommand UpdateRunningSessionCommand { get; }
@@ -111,6 +112,12 @@ namespace RunTracker.ViewModel
 
         private async Task AddRunningSessionAsync()
         {
+            if (RunType == null)
+            {
+                MessageBox.Show("Vänligen välj en typ av löppass.");
+                return;
+            }
+
             var newSession = new RunningSession
             {
                 Date = (DateTime)Date,
@@ -119,7 +126,7 @@ namespace RunTracker.ViewModel
                 RunType = RunType
             };
             await _runningSessionRepository.AddAsync(newSession);
-            await LoadRunningSessions(); 
+            await LoadRunningSessions();
         }
 
         private async Task UpdateRunningSessionAsync()
@@ -150,7 +157,7 @@ namespace RunTracker.ViewModel
         {
             var newType = new RunType
             {
-                Name = RunTypeName
+                Name = RunTypeNew
             };
             await _runTypeRepository.AddAsync(newType);
 
