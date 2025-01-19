@@ -55,7 +55,19 @@ namespace RunTracker.ViewModel
         public TimeSpan Time { get; set; }
         public RunType RunType { get; set; }
 
-        public string RunTypeNew { get; set; }
+        private string _runTypeNew;
+        public string RunTypeNew
+        {
+            get { return _runTypeNew; }
+            set
+            {
+                if (_runTypeNew != value)
+                {
+                    _runTypeNew = value;
+                    RaisePropertyChanged(); 
+                }
+            }
+        }
 
         public DelegateCommand AddRunningSessionCommand { get; }
         public DelegateCommand UpdateRunningSessionCommand { get; }
@@ -161,7 +173,10 @@ namespace RunTracker.ViewModel
             };
             await _runTypeRepository.AddAsync(newType);
 
+            RunTypeNew = string.Empty;
+
             await LoadRunTypes();
+
         }
 
     }
