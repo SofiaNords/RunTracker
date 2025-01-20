@@ -12,6 +12,7 @@
 
 ### Libraries
 
+- [FontAwesome.Sharp](https://www.nuget.org/packages/FontAwesome.Sharp)
 - [Microsoft.Extensions.Configuration.UserSecrets](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets)
 - [MongoDB C# Driver](https://www.mongodb.com/docs/drivers/csharp/current/)
 
