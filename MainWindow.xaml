@@ -29,17 +29,17 @@
                 <Label Content="Datum:" Width="150"/>
                 <DatePicker SelectedDateFormat="Short" 
                             FirstDayOfWeek="Monday"
-                            SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            SelectedDate="{Binding RunningSession.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <Label Content="Distans (km):" Width="150"/>
-                <TextBox Text="{Binding Distance, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                <TextBox Text="{Binding RunningSession.Distance, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <Label Content="Tid (hh:mm:ss):" Width="150"/>
-                <TextBox Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                <TextBox Text="{Binding RunningSession.Time, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">

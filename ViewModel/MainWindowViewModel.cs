@@ -36,24 +36,49 @@ namespace RunTracker.ViewModel
 
                     if (_selectedRunningSession != null)
                     {
-                        Date = _selectedRunningSession.Date;
-                        Distance = _selectedRunningSession.Distance;
-                        Time = _selectedRunningSession.Time;
-                        RunType = _selectedRunningSession.RunType;
+                        RunningSession.Date = _selectedRunningSession.Date;
+                        RunningSession.Distance = _selectedRunningSession.Distance;
+                        RunningSession.Time = _selectedRunningSession.Time;
+                        RunningSession.RunType = _selectedRunningSession.RunType;
 
-                        RaisePropertyChanged(nameof(Date));
-                        RaisePropertyChanged(nameof(Distance));
-                        RaisePropertyChanged(nameof(Time));
-                        RaisePropertyChanged(nameof(RunType));
+                        RaisePropertyChanged(nameof(RunningSession.Date));
+                        RaisePropertyChanged(nameof(RunningSession.Distance));
+                        RaisePropertyChanged(nameof(RunningSession.Time));
+                        RaisePropertyChanged(nameof(RunningSession.RunType));
                     }
                 }
             }
         }
 
-        public DateTime? Date { get; set; }
-        public double Distance { get; set; }
-        public TimeSpan Time { get; set; }
-        public RunType RunType { get; set; }
+        private RunningSession _runningSession;
+
+        public RunningSession RunningSession
+        {
+            get { return _runningSession; }
+            set 
+            { 
+                if (_runningSession != value) 
+                {
+                    _runningSession = value;
+                    RaisePropertyChanged();
+                } 
+            }
+        }
+
+        private RunType _runType;
+
+        public RunType RunType
+        {
+            get { return _runType; }
+            set 
+            { 
+                if (_runType != value)
+                {
+                    _runType = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         private string _runTypeNew;
         public string RunTypeNew
@@ -83,6 +108,8 @@ namespace RunTracker.ViewModel
         public MainWindowViewModel(IConfiguration? configuration)
         {
             _configuration = configuration;
+
+            RunningSession = new RunningSession();
 
             AddRunningSessionCommand = new DelegateCommand(async _ => await AddRunningSessionAsync());
             UpdateRunningSessionCommand = new DelegateCommand(async _ => await UpdateRunningSessionAsync());
@@ -124,31 +151,45 @@ namespace RunTracker.ViewModel
 
         private async Task AddRunningSessionAsync()
         {
-            if (RunType == null)
+            if (RunningSession.Date == null || RunningSession.Distance == null || RunningSession.Time == null || RunType == null)
             {
-                MessageBox.Show("Vänligen välj en typ av löppass.");
+                MessageBox.Show("Alla fält måste fyllas i.");
                 return;
             }
 
             var newSession = new RunningSession
             {
-                Date = (DateTime)Date,
-                Distance = Distance,
-                Time = Time,
+                Date = (DateTime)RunningSession.Date,
+                Distance = (float)RunningSession.Distance,
+                Time = (TimeSpan)RunningSession.Time,
                 RunType = RunType
             };
-            await _runningSessionRepository.AddAsync(newSession);
-            await LoadRunningSessions();
+
+            try
+            {
+                await _runningSessionRepository.AddAsync(newSession);
+
+                RunningSession = new RunningSession();  
+                RunType = null;  
+
+                await LoadRunningSessions();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett fel uppstod vid lagring av löppasset: {ex.Message}");
+            }
         }
+
+
 
         private async Task UpdateRunningSessionAsync()
         {
             if (SelectedRunningSession != null)
             {
-                SelectedRunningSession.Date = (DateTime)Date;
-                SelectedRunningSession.Distance = Distance;
-                SelectedRunningSession.Time = Time;
-                SelectedRunningSession.RunType = RunType;
+                SelectedRunningSession.Date = (DateTime)RunningSession.Date;
+                SelectedRunningSession.Distance = (float)RunningSession.Distance;
+                SelectedRunningSession.Time = (TimeSpan)RunningSession.Time;
+                SelectedRunningSession.RunType = RunningSession.RunType;
 
                 await _runningSessionRepository.UpdateAsync(SelectedRunningSession);
 
