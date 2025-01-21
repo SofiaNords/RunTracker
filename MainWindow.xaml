@@ -88,9 +88,21 @@
                     <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Date, StringFormat={}{0:yyyy-MM-dd}}"/>
                     <GridViewColumn Header="Distans (km)" DisplayMemberBinding="{Binding Distance}"/>
                     <GridViewColumn Header="Tid" DisplayMemberBinding="{Binding Time}"/>
-                    <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding RunType.Name}"/>
-                    <!-- Lägg till en kolumn för radera-knappen -->
-                    <GridViewColumn Header="Radera">
+                    <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding RunType.Name}" Width="200"/>
+                    <GridViewColumn Header="Edit">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button 
+                                Command="{Binding DataContext.DeleteRunningSessionCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                CommandParameter="{Binding}">   
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconBlock Icon="Pen"/>
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Delete">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button 
