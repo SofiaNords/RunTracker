@@ -132,8 +132,11 @@ namespace RunTracker.ViewModel
         private async Task LoadRunningSessions()
         {
             var sessions = await _runningSessionRepository.GetAllAsync();
+
+            var sortedSessions = sessions.OrderByDescending(session => session.Date).ToList();
+
             RunningSessions.Clear();
-            foreach (var session in sessions)
+            foreach (var session in sortedSessions)
             {
                 RunningSessions.Add(session);
             }
