@@ -93,9 +93,12 @@
                     <GridViewColumn Header="Radera">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Radera" 
+                                <Button 
                                 Command="{Binding DataContext.DeleteRunningSessionCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
                                 CommandParameter="{Binding}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconBlock Icon="TrashCan"/>
+                                    </StackPanel>
                                 </Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
