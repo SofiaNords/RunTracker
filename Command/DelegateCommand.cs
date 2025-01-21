@@ -1,36 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace RunTracker.Command
 {
     public class DelegateCommand : ICommand
     {
-        private readonly Action<object> execute;
-        private readonly Func<object?, bool> canExecute;
-        private DelegateCommand? openPackOption;
+        private readonly Action<object?> _execute;
+        private readonly Func<object?, bool>? _canExecute;
 
         public event EventHandler? CanExecuteChanged;
 
-        public DelegateCommand(Action<object> execute, Func<object?, bool> canExecute = null)
+        // Constructor to accept the action and an optional condition for CanExecute
+        public DelegateCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
         {
             ArgumentNullException.ThrowIfNull(execute);
-            this.execute = execute;
-            this.canExecute = canExecute;
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
-        public DelegateCommand(DelegateCommand? openPackOption)
-        {
-            this.openPackOption = openPackOption;
-        }
-
+        // Raises CanExecuteChanged so the UI can refresh whether the command can execute
         public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
-        public bool CanExecute(object? parameter) => canExecute is null ? true : canExecute(parameter);
+        // CanExecute method which checks if the command is executable
+        public bool CanExecute(object? parameter) => _canExecute?.Invoke(parameter) ?? true;
 
-        public void Execute(object? parameter) => execute(parameter);
+        // Execute method that triggers the action passed to the constructor
+        public void Execute(object? parameter) => _execute(parameter);
     }
 }

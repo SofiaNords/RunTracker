@@ -52,12 +52,6 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,1" HorizontalAlignment="Stretch">
-                <Button Content="Ta bort" 
-                        Width="100" 
-                        Padding="5"
-                        Margin="5,5,5,0"
-                        Command="{Binding DeleteRunningSessionCommand}" />
-                <!--IsEnabled="{Binding CanDeleteRun, UpdateSourceTrigger=PropertyChanged}"/>-->
 
                 <Button Content="Uppdatera" 
                         Width="100" 
@@ -95,6 +89,17 @@
                     <GridViewColumn Header="Distans (km)" DisplayMemberBinding="{Binding Distance}"/>
                     <GridViewColumn Header="Tid" DisplayMemberBinding="{Binding Time}"/>
                     <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding RunType.Name}"/>
+                    <!-- Lägg till en kolumn för radera-knappen -->
+                    <GridViewColumn Header="Radera">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Radera" 
+                                Command="{Binding DataContext.DeleteRunningSessionCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                CommandParameter="{Binding}">
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

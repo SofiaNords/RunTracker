@@ -113,7 +113,7 @@ namespace RunTracker.ViewModel
 
             AddRunningSessionCommand = new DelegateCommand(async _ => await AddRunningSessionAsync());
             UpdateRunningSessionCommand = new DelegateCommand(async _ => await UpdateRunningSessionAsync());
-            DeleteRunningSessionCommand = new DelegateCommand(async _ => await DeleteRunningSessionAsync());
+            DeleteRunningSessionCommand = new DelegateCommand(async (parameter) => await DeleteRunningSessionAsync(parameter as RunningSession));
             AddRunTypeCommand = new DelegateCommand(async _ => await AddRunTypeAsync());
 
             ConnectToDatabase();
@@ -200,14 +200,34 @@ namespace RunTracker.ViewModel
             }
         }
 
-        private async Task DeleteRunningSessionAsync()
+        //private async Task DeleteRunningSessionAsync()
+        //{
+        //    if (SelectedRunningSession != null)
+        //    {
+        //        await _runningSessionRepository.DeleteAsync(SelectedRunningSession.Id);
+        //        RunningSessions.Remove(SelectedRunningSession);
+        //    }
+        //}
+
+        private async Task DeleteRunningSessionAsync(RunningSession session)
         {
-            if (SelectedRunningSession != null)
+            if (session != null)
             {
-                await _runningSessionRepository.DeleteAsync(SelectedRunningSession.Id);
-                RunningSessions.Remove(SelectedRunningSession);
+                try
+                {
+                    // Ta bort löppasset från databasen
+                    await _runningSessionRepository.DeleteAsync(session.Id);
+
+                    // Ta bort löppasset från listan
+                    RunningSessions.Remove(session);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Fel vid radering: {ex.Message}");
+                }
             }
         }
+
 
         private async Task AddRunTypeAsync()
         {
