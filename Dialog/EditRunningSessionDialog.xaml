@@ -1,0 +1,50 @@
+﻿<Window x:Class="RunTracker.Dialog.EditRunningSessionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RunTracker.Dialog"
+        xmlns:converter="clr-namespace:RunTracker.Converter"
+        mc:Ignorable="d"
+        Title="EditRunningSessionDialog" Height="290" Width="220"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <converter:StringToFloatConverter x:Key="StringToFloatConverter"/>
+        <converter:StringToTimeSpanConverter x:Key="StringToTimeSpanConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid>
+            <StackPanel Margin="10,10,10,10">
+                <Label Content="Datum:" Width="150"/>
+                <DatePicker SelectedDateFormat="Short"
+                            FirstDayOfWeek="Monday"
+                            SelectedDate="{Binding SelectedRunningSession.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <Label Content="Distans (km):"/>
+                <TextBox Text="{Binding SelectedRunningSession.Distance, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToFloatConverter}}"/>
+                <Label Content="Tid (hh:mm:ss):"/>
+                <TextBox Text="{Binding SelectedRunningSession.Time, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToTimeSpanConverter}}"/>
+                <Label Content="Typ av löppass:" Width="150"/>
+                <ComboBox ItemsSource="{Binding RunTypes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding RunType, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <StackPanel Orientation="Horizontal" 
+                        VerticalAlignment="Bottom" 
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0">
+                    <Button Content="Cancel" 
+                        Height="20" 
+                        Width="50" 
+                        Margin="10,10,10,10"
+                       />
+                    <Button Content="Update" 
+                        Height="20" 
+                        Width="50" 
+                        Margin="10,10,10,10"
+                        Command="{Binding UpdateRunningSessionCommand}"
+                        />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RunTracker.Command;
+using RunTracker.Dialog;
 using RunTracker.Model;
 using RunTracker.Repository;
 using RunTracker.Services;
 using System.Collections.ObjectModel;
 using System.Windows;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RunTracker.ViewModel
 {
-    class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         private IRunningSessionRepository _runningSessionRepository;
 
@@ -23,34 +23,8 @@ namespace RunTracker.ViewModel
 
         public ObservableCollection<RunType> RunTypes { get; set; } = new ObservableCollection<RunType>();
 
-        private RunningSession _selectedRunningSession;
-        public RunningSession SelectedRunningSession
-        {
-            get { return _selectedRunningSession; }
-            set
-            {
-                if (_selectedRunningSession != value)
-                {
-                    _selectedRunningSession = value;
-                    RaisePropertyChanged();
 
-                    if (_selectedRunningSession != null)
-                    {
-                        RunningSession.Date = _selectedRunningSession.Date;
-                        RunningSession.Distance = _selectedRunningSession.Distance;
-                        RunningSession.Time = _selectedRunningSession.Time;
-                        RunningSession.RunType = _selectedRunningSession.RunType;
-
-                        RaisePropertyChanged(nameof(RunningSession.Date));
-                        RaisePropertyChanged(nameof(RunningSession.Distance));
-                        RaisePropertyChanged(nameof(RunningSession.Time));
-                        RaisePropertyChanged(nameof(RunningSession.RunType));
-                    }
-                }
-            }
-        }
-
-        private RunningSession _runningSession;
+        public RunningSession _runningSession;
 
         public RunningSession RunningSession
         {
@@ -65,7 +39,7 @@ namespace RunTracker.ViewModel
             }
         }
 
-        private RunType _runType;
+        public RunType _runType;
 
         public RunType RunType
         {
@@ -95,15 +69,12 @@ namespace RunTracker.ViewModel
         }
 
         public DelegateCommand AddRunningSessionCommand { get; }
-        public DelegateCommand UpdateRunningSessionCommand { get; }
+        
         public DelegateCommand DeleteRunningSessionCommand { get; }
 
         public DelegateCommand AddRunTypeCommand { get; }
 
-        //public bool CanAddRun => !double.IsNaN(Distance) && Time != TimeSpan.Zero && !string.IsNullOrEmpty(RunType) && Date.HasValue;
-
-        //public bool CanUpdateRun => SelectedRunningSession != null;
-        //public bool CanDeleteRun => SelectedRunningSession != null;
+        public DelegateCommand OpenEditRunningSessionDialogCommand { get; }
 
         public MainWindowViewModel(IConfiguration? configuration)
         {
@@ -112,15 +83,16 @@ namespace RunTracker.ViewModel
             RunningSession = new RunningSession();
 
             AddRunningSessionCommand = new DelegateCommand(async _ => await AddRunningSessionAsync());
-            UpdateRunningSessionCommand = new DelegateCommand(async _ => await UpdateRunningSessionAsync());
+            
             DeleteRunningSessionCommand = new DelegateCommand(async (parameter) => await DeleteRunningSessionAsync(parameter as RunningSession));
             AddRunTypeCommand = new DelegateCommand(async _ => await AddRunTypeAsync());
+            OpenEditRunningSessionDialogCommand = new DelegateCommand(async (parameter) => OpenEditRunningSessionDialog(parameter as RunningSession));
+            
 
             ConnectToDatabase();
             LoadRunningSessions();
             LoadRunTypes();
         }
-
 
         private void ConnectToDatabase()
         {
@@ -183,31 +155,13 @@ namespace RunTracker.ViewModel
             }
         }
 
-
-
-        private async Task UpdateRunningSessionAsync()
+        public void OpenEditRunningSessionDialog(RunningSession session)
         {
-            if (SelectedRunningSession != null)
-            {
-                SelectedRunningSession.Date = (DateTime)RunningSession.Date;
-                SelectedRunningSession.Distance = (float)RunningSession.Distance;
-                SelectedRunningSession.Time = (TimeSpan)RunningSession.Time;
-                SelectedRunningSession.RunType = RunningSession.RunType;
+            var selectedSession = session as RunningSession;
 
-                await _runningSessionRepository.UpdateAsync(SelectedRunningSession);
-
-                await LoadRunningSessions();
-            }
+            var dialog = new EditRunningSessionDialog(selectedSession, RunTypes, _runningSessionRepository);
+            dialog.ShowDialog();
         }
-
-        //private async Task DeleteRunningSessionAsync()
-        //{
-        //    if (SelectedRunningSession != null)
-        //    {
-        //        await _runningSessionRepository.DeleteAsync(SelectedRunningSession.Id);
-        //        RunningSessions.Remove(SelectedRunningSession);
-        //    }
-        //}
 
         private async Task DeleteRunningSessionAsync(RunningSession session)
         {
@@ -215,10 +169,7 @@ namespace RunTracker.ViewModel
             {
                 try
                 {
-                    // Ta bort löppasset från databasen
                     await _runningSessionRepository.DeleteAsync(session.Id);
-
-                    // Ta bort löppasset från listan
                     RunningSessions.Remove(session);
                 }
                 catch (Exception ex)

@@ -10,6 +10,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <converter:RunTypeToObjectIdConverter x:Key="RunTypeToObjectIdConverter"/>
+        <converter:StringToTimeSpanConverter x:Key="StringToTimeSpanConverter"/>
+        <converter:StringToFloatConverter x:Key="StringToFloatConverter"/>
     </Window.Resources>
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -34,7 +36,9 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <Label Content="Distans (km):" Width="150"/>
-                <TextBox Text="{Binding RunningSession.Distance, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                <TextBox Text="{Binding RunningSession.Distance, UpdateSourceTrigger=PropertyChanged}"
+                         Width="200">
+                </TextBox>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
@@ -46,26 +50,17 @@
                 <Label Content="Typ av löppass:" Width="150"/>
                 <ComboBox ItemsSource="{Binding RunTypes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           DisplayMemberPath="Name"
-                          SelectedItem="{Binding RunType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          SelectedValue="{Binding RunType.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RunTypeToObjectIdConverter}}"
+                          SelectedItem="{Binding RunType, UpdateSourceTrigger=PropertyChanged}"
                           Width="200"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="0,1" HorizontalAlignment="Stretch">
-
-                <Button Content="Uppdatera" 
-                        Width="100" 
-                        Padding="5"
-                        Margin="5,5,5,0"
-                        Command="{Binding UpdateRunningSessionCommand}" />
-                <!--IsEnabled="{Binding CanUpdateRun, UpdateSourceTrigger=PropertyChanged}"/>-->
-
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <Label  Width="150"/>
                 <Button Content="Lägg till löppass" 
-                        Width="150"
+                        Width="200"
                         Padding="5"
-                        Margin="5,5,5,0"
-                        Command="{Binding AddRunningSessionCommand}" />
-                <!--IsEnabled="{Binding CanAddRun, UpdateSourceTrigger=PropertyChanged}"/>-->
+                        Margin="0,5,5,0"
+                        Command="{Binding AddRunningSessionCommand}"/>
             </StackPanel>
         </StackPanel>
 
@@ -81,8 +76,7 @@
            Grid.Row="1"
            Grid.ColumnSpan="2"       
            Margin="10" 
-           ItemsSource="{Binding RunningSessions}"
-           SelectedItem="{Binding SelectedRunningSession}">
+           ItemsSource="{Binding RunningSessions}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Date, StringFormat={}{0:yyyy-MM-dd}}"/>
@@ -92,8 +86,8 @@
                     <GridViewColumn Header="Edit">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button 
-                                Command="{Binding DataContext.DeleteRunningSessionCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                <Button  
+                                Command="{Binding DataContext.OpenEditRunningSessionDialogCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
                                 CommandParameter="{Binding}">   
                                     <StackPanel Orientation="Horizontal">
                                         <fa:IconBlock Icon="Pen"/>
