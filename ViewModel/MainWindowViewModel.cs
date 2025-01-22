@@ -78,6 +78,8 @@ namespace RunTracker.ViewModel
 
         public DelegateCommand OpenEditRunningSessionDialogCommand { get; }
 
+        public DelegateCommand OpenEditRunTypeDialogCommand { get; }
+
         public MainWindowViewModel(IConfiguration? configuration)
         {
             _configuration = configuration;
@@ -93,6 +95,7 @@ namespace RunTracker.ViewModel
             DeleteRunTypeCommand = new DelegateCommand(async (parameter) => await DeleteRunTypeAsync(parameter as RunType));
 
             OpenEditRunningSessionDialogCommand = new DelegateCommand(async (parameter) => OpenEditRunningSessionDialog(parameter as RunningSession));
+            OpenEditRunTypeDialogCommand = new DelegateCommand(async (parameter) => OpenEditRunTypeDialog(parameter as RunType));
             
 
             ConnectToDatabase();
@@ -202,6 +205,13 @@ namespace RunTracker.ViewModel
         }
 
 
+        private void OpenEditRunTypeDialog(RunType? runType)
+        {
+            var selectedRunType = runType as RunType;
+
+            var dialog = new EditRunTypeDialog(selectedRunType, _runTypeRepository);
+            dialog.ShowDialog();
+        }
 
         private async Task DeleteRunTypeAsync(RunType? runType)
         {

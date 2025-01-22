@@ -78,7 +78,8 @@
                         <GridViewColumn Header="Ändra">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button>
+                                    <Button Command="{Binding DataContext.OpenEditRunTypeDialogCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            CommandParameter="{Binding}">
                                         <StackPanel Orientation="Horizontal">
                                             <fa:IconBlock Icon="Pen"/>
                                         </StackPanel>
