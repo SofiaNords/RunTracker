@@ -12,6 +12,8 @@ namespace RunTracker.ViewModel
 
         private readonly Window _dialog;
 
+        private readonly Func<Task> _onUpdate;
+
         private RunningSession _selectedRunningSession;
 
         public RunningSession SelectedRunningSession
@@ -48,13 +50,14 @@ namespace RunTracker.ViewModel
 
         public DelegateCommand UpdateRunningSessionCommand { get; }
 
-        public EditRunningSessionViewModel(RunningSession selectedSession, ObservableCollection<RunType> runTypes, IRunningSessionRepository runningSessionRepository, Window dialog)
+        public EditRunningSessionViewModel(RunningSession selectedSession, ObservableCollection<RunType> runTypes, IRunningSessionRepository runningSessionRepository, Window dialog, Func<Task> onUpdate)
         {
             SelectedRunningSession = selectedSession;
             RunTypes = runTypes;
             RunType = selectedSession.RunType;
             _runningSessionRepository = runningSessionRepository;
             _dialog = dialog;
+            _onUpdate = onUpdate;
 
             UpdateRunningSessionCommand = new DelegateCommand(async _ => await UpdateRunningSessionAsync());
         }
@@ -66,7 +69,7 @@ namespace RunTracker.ViewModel
             try
             {
                 await _runningSessionRepository.UpdateAsync(SelectedRunningSession);
-                MessageBox.Show("Löpsessionen har uppdaterats.");
+                await _onUpdate();
                 _dialog.Close();
             }
             catch (Exception ex)

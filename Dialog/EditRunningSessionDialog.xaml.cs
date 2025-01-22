@@ -11,11 +11,11 @@ namespace RunTracker.Dialog
     /// </summary>
     public partial class EditRunningSessionDialog : Window
     {
-        public EditRunningSessionDialog(RunningSession selectedSession, ObservableCollection<RunType> runTypes, IRunningSessionRepository runningSessionRepository)
+        public EditRunningSessionDialog(RunningSession selectedSession, ObservableCollection<RunType> runTypes, IRunningSessionRepository runningSessionRepository, Func<Task> onUpdate)
         {
             InitializeComponent();
 
-            DataContext = new EditRunningSessionViewModel(selectedSession, runTypes, runningSessionRepository, this);
+            DataContext = new EditRunningSessionViewModel(selectedSession, runTypes, runningSessionRepository, this, onUpdate);
         }
     }
 }

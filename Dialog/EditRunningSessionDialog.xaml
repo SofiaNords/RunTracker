@@ -18,16 +18,16 @@
                 <Label Content="Datum:" Width="150"/>
                 <DatePicker SelectedDateFormat="Short"
                             FirstDayOfWeek="Monday"
-                            SelectedDate="{Binding SelectedRunningSession.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            SelectedDate="{Binding SelectedRunningSession.Date}"/>
                 <Label Content="Distans (km):"/>
                 <TextBox Text="{Binding SelectedRunningSession.Distance, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToFloatConverter}}"/>
                 <Label Content="Tid (hh:mm:ss):"/>
                 <TextBox Text="{Binding SelectedRunningSession.Time, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToTimeSpanConverter}}"/>
                 <Label Content="Typ av löppass:" Width="150"/>
-                <ComboBox ItemsSource="{Binding RunTypes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                          DisplayMemberPath="Name"
-                          SelectedItem="{Binding RunType, UpdateSourceTrigger=PropertyChanged}"/>
-
+                <ComboBox SelectedItem="{Binding RunType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          ItemsSource="{Binding RunTypes}"
+                          DisplayMemberPath="Name"/>
+                
                 <StackPanel Orientation="Horizontal" 
                         VerticalAlignment="Bottom" 
                         HorizontalAlignment="Center"

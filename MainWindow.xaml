@@ -114,7 +114,7 @@
                     <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Date, StringFormat={}{0:yyyy-MM-dd}}"/>
                     <GridViewColumn Header="Distans (km)" DisplayMemberBinding="{Binding Distance}"/>
                     <GridViewColumn Header="Tid" DisplayMemberBinding="{Binding Time}"/>
-                    <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding RunType.Name}" Width="200"/>
+                    <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding RunType.Name, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
                     <GridViewColumn Header="Ändra">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

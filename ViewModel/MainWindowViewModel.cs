@@ -169,7 +169,7 @@ namespace RunTracker.ViewModel
         {
             var selectedSession = session as RunningSession;
 
-            var dialog = new EditRunningSessionDialog(selectedSession, RunTypes, _runningSessionRepository);
+            var dialog = new EditRunningSessionDialog(selectedSession, RunTypes, _runningSessionRepository, async () => await LoadRunningSessions());
             dialog.ShowDialog();
         }
 
