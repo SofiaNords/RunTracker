@@ -14,15 +14,15 @@
     <Grid>
         <Grid>
             <StackPanel Margin="10,10,10,10">
-                <Label Content="Datum:" Width="150"/>
+                <Label Content="Date:"/>
                 <DatePicker SelectedDateFormat="Short"
                             FirstDayOfWeek="Monday"
                             SelectedDate="{Binding SelectedRunningSession.Date}"/>
-                <Label Content="Distans (km):"/>
+                <Label Content="Distance (km):"/>
                 <TextBox Text="{Binding SelectedRunningSession.Distance, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="Tid (hh:mm:ss):"/>
+                <Label Content="Duration (hh:mm:ss):"/>
                 <TextBox Text="{Binding SelectedRunningSession.Time, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="Typ av löppass:" Width="150"/>
+                <Label Content="Run Type:"/>
                 <ComboBox SelectedItem="{Binding RunType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           ItemsSource="{Binding RunTypes}"
                           DisplayMemberPath="Name"/>

@@ -25,29 +25,29 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical" Margin="10" Grid.ColumnSpan="2">
-            <TextBlock Text="Registrera nytt löppass" FontWeight="Bold" FontSize="16"/>
+            <TextBlock Text="Register new Running Session" FontWeight="Bold" FontSize="16"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
-                <Label Content="Datum:" Width="150"/>
+                <Label Content="Date:" Width="150"/>
                 <DatePicker SelectedDateFormat="Short" 
                             FirstDayOfWeek="Monday"
                             SelectedDate="{Binding RunningSession.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
-                <Label Content="Distans (km):" Width="150"/>
+                <Label Content="Distance (km):" Width="150"/>
                 <TextBox Text="{Binding RunningSession.Distance, UpdateSourceTrigger=PropertyChanged}"
                          Width="200">
                 </TextBox>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
-                <Label Content="Tid (hh:mm:ss):" Width="150"/>
+                <Label Content="Duration (hh:mm:ss):" Width="150"/>
                 <TextBox Text="{Binding RunningSession.Time, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
-                <Label Content="Typ av löppass:" Width="150"/>
+                <Label Content="Run Type:" Width="150"/>
                 <ComboBox ItemsSource="{Binding RunTypes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           DisplayMemberPath="Name"
                           SelectedItem="{Binding RunType, UpdateSourceTrigger=PropertyChanged}"
@@ -56,7 +56,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <Label  Width="150"/>
-                <Button Content="Lägg till löppass" 
+                <Button Content="Add Running Sesssion" 
                         Width="200"
                         Padding="5"
                         Margin="0,5,5,0"
@@ -65,17 +65,17 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Margin="10" Grid.Column="1">
-            <TextBlock Text="Lägg till ny Typ av löppass" FontWeight="Bold" FontSize="16"/>
+            <TextBlock Text="Register new Run Type" FontWeight="Bold" FontSize="16"/>
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <TextBox Text="{Binding RunTypeNew, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="25"/>
-                <Button Content="Lägg till" Width="100" Margin="5,0" Command="{Binding AddRunTypeCommand, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Add Run Type" Width="100" Margin="5,0" Command="{Binding AddRunTypeCommand, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <ListView ItemsSource="{Binding RunTypes}"
                       Height="150">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding Name}" Width="150"/>
-                        <GridViewColumn Header="Ändra">
+                        <GridViewColumn Header="Run Type" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                        <GridViewColumn Header="Edit">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Command="{Binding DataContext.OpenEditRunTypeDialogCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
@@ -87,7 +87,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Ta bort">
+                        <GridViewColumn Header="Delete">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Command="{Binding DataContext.DeleteRunTypeCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
@@ -111,11 +111,11 @@
                   ItemsSource="{Binding RunningSessions}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Date, StringFormat={}{0:yyyy-MM-dd}}"/>
-                    <GridViewColumn Header="Distans (km)" DisplayMemberBinding="{Binding Distance}"/>
-                    <GridViewColumn Header="Tid" DisplayMemberBinding="{Binding Time}"/>
-                    <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding RunType.Name, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
-                    <GridViewColumn Header="Ändra">
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date, StringFormat={}{0:yyyy-MM-dd}}"/>
+                    <GridViewColumn Header="Distance (km)" DisplayMemberBinding="{Binding Distance}"/>
+                    <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Time}"/>
+                    <GridViewColumn Header="Run Type" DisplayMemberBinding="{Binding RunType.Name, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                    <GridViewColumn Header="Edit">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button  
@@ -128,7 +128,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Ta bort">
+                    <GridViewColumn Header="Delete">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button 

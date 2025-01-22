@@ -11,19 +11,19 @@
     <Grid>
         <Grid>
             <StackPanel Margin="10,10,10,10">
-                <Label Content="Typ av löppass:"/>
+                <Label Content="Run Type:"/>
                 <TextBox Text="{Binding SelectedRunType.Name, UpdateSourceTrigger=PropertyChanged}"/>
                 
                 <StackPanel Orientation="Horizontal" 
                         VerticalAlignment="Bottom" 
                         HorizontalAlignment="Center"
                         Margin="0,10,0,0">
-                    <Button Content="Avbryt" 
+                    <Button Content="Cancel" 
                         Height="20" 
                         Width="50" 
                         Margin="10,10,10,10"
                        />
-                    <Button Content="Uppdatera" 
+                    <Button Content="Update" 
                         Height="20" 
                         Width="50" 
                         Margin="10,10,10,10"
