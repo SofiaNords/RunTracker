@@ -70,25 +70,54 @@
                 <TextBox Text="{Binding RunTypeNew, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="25"/>
                 <Button Content="Lägg till" Width="100" Margin="5,0" Command="{Binding AddRunTypeCommand, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
+            <ListView ItemsSource="{Binding RunTypes}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                        <GridViewColumn Header="Ändra">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:IconBlock Icon="Pen"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Ta bort">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button>
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:IconBlock Icon="TrashCan"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </StackPanel>
+       
 
-        <ListView x:Name="RunsListView" 
-           Grid.Row="1"
-           Grid.ColumnSpan="2"       
-           Margin="10" 
-           ItemsSource="{Binding RunningSessions}">
+        <ListView Grid.Row="1"
+                  Grid.ColumnSpan="2"       
+                  Margin="10" 
+                  ItemsSource="{Binding RunningSessions}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Date, StringFormat={}{0:yyyy-MM-dd}}"/>
                     <GridViewColumn Header="Distans (km)" DisplayMemberBinding="{Binding Distance}"/>
                     <GridViewColumn Header="Tid" DisplayMemberBinding="{Binding Time}"/>
                     <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding RunType.Name}" Width="200"/>
-                    <GridViewColumn Header="Edit">
+                    <GridViewColumn Header="Ändra">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button  
-                                Command="{Binding DataContext.OpenEditRunningSessionDialogCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                CommandParameter="{Binding}">   
+                                    Command="{Binding DataContext.OpenEditRunningSessionDialogCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                    CommandParameter="{Binding}">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:IconBlock Icon="Pen"/>
                                     </StackPanel>
@@ -96,12 +125,12 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Delete">
+                    <GridViewColumn Header="Ta bort">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button 
-                                Command="{Binding DataContext.DeleteRunningSessionCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                CommandParameter="{Binding}">
+                                    Command="{Binding DataContext.DeleteRunningSessionCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                    CommandParameter="{Binding}">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:IconBlock Icon="TrashCan"/>
                                     </StackPanel>
