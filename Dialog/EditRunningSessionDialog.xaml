@@ -19,7 +19,7 @@
                             FirstDayOfWeek="Monday"
                             SelectedDate="{Binding SelectedRunningSession.Date}"/>
                 <Label Content="Distans (km):"/>
-                <TextBox Text="{Binding SelectedRunningSession.Distance, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToFloatConverter}}"/>
+                <TextBox Text="{Binding SelectedRunningSession.Distance, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="Tid (hh:mm:ss):"/>
                 <TextBox Text="{Binding SelectedRunningSession.Time, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="Typ av löppass:" Width="150"/>
