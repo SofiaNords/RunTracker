@@ -17,5 +17,9 @@ namespace RunTracker.Dialog
 
             DataContext = new EditRunTypeViewModel(selectedRunType, runTypeRepository, this);
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

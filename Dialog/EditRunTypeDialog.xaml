@@ -22,7 +22,7 @@
                         Height="20" 
                         Width="50" 
                         Margin="10,10,10,10"
-                       />
+                        Click="Button_Click"/>
                     <Button Content="Update" 
                         Height="20" 
                         Width="50" 

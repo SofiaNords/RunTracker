@@ -17,5 +17,10 @@ namespace RunTracker.Dialog
 
             DataContext = new EditRunningSessionViewModel(selectedSession, runTypes, runningSessionRepository, this, onUpdate);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
