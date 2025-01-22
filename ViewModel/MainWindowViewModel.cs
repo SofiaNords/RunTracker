@@ -74,6 +74,8 @@ namespace RunTracker.ViewModel
 
         public DelegateCommand AddRunTypeCommand { get; }
 
+        public DelegateCommand DeleteRunTypeCommand { get; }
+
         public DelegateCommand OpenEditRunningSessionDialogCommand { get; }
 
         public MainWindowViewModel(IConfiguration? configuration)
@@ -85,7 +87,11 @@ namespace RunTracker.ViewModel
             AddRunningSessionCommand = new DelegateCommand(async _ => await AddRunningSessionAsync());
             
             DeleteRunningSessionCommand = new DelegateCommand(async (parameter) => await DeleteRunningSessionAsync(parameter as RunningSession));
+            
             AddRunTypeCommand = new DelegateCommand(async _ => await AddRunTypeAsync());
+
+            DeleteRunTypeCommand = new DelegateCommand(async (parameter) => await DeleteRunTypeAsync(parameter as RunType));
+
             OpenEditRunningSessionDialogCommand = new DelegateCommand(async (parameter) => OpenEditRunningSessionDialog(parameter as RunningSession));
             
 
@@ -93,6 +99,7 @@ namespace RunTracker.ViewModel
             LoadRunningSessions();
             LoadRunTypes();
         }
+
 
         private void ConnectToDatabase()
         {
@@ -194,5 +201,26 @@ namespace RunTracker.ViewModel
 
         }
 
+
+
+        private async Task DeleteRunTypeAsync(RunType? runType)
+        {
+            if (runType != null)
+            {
+                try
+                {
+                    await _runTypeRepository.DeleteAsync(runType.Id);
+                    RunTypes.Remove(runType);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Fel vid radering: {ex.Message}");
+                }
+            }
+        }
+
     }
+
+
+
 }

@@ -70,7 +70,8 @@
                 <TextBox Text="{Binding RunTypeNew, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="25"/>
                 <Button Content="Lägg till" Width="100" Margin="5,0" Command="{Binding AddRunTypeCommand, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <ListView ItemsSource="{Binding RunTypes}">
+            <ListView ItemsSource="{Binding RunTypes}"
+                      Height="150">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Typ av löppass" DisplayMemberBinding="{Binding Name}" Width="150"/>
@@ -88,7 +89,8 @@
                         <GridViewColumn Header="Ta bort">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button>
+                                    <Button Command="{Binding DataContext.DeleteRunTypeCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            CommandParameter="{Binding}">
                                         <StackPanel Orientation="Horizontal">
                                             <fa:IconBlock Icon="TrashCan"/>
                                         </StackPanel>
