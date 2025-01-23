@@ -207,6 +207,12 @@ namespace RunTracker.ViewModel
 
         private async Task AddRunTypeAsync()
         {
+            if (string.IsNullOrWhiteSpace(RunTypeNew))
+            {
+                MessageBox.Show("The field cannot be empty.");
+                return;
+            }
+
             var newType = new RunType
             {
                 Name = RunTypeNew
