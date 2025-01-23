@@ -112,7 +112,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date, StringFormat={}{0:yyyy-MM-dd}}"/>
-                    <GridViewColumn Header="Distance (km)" DisplayMemberBinding="{Binding Distance}"/>
+                    <GridViewColumn Header="Distance (km)" DisplayMemberBinding="{Binding Distance, StringFormat=N2}"/>
                     <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Time}"/>
                     <GridViewColumn Header="Run Type" DisplayMemberBinding="{Binding RunType.Name, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
                     <GridViewColumn Header="Edit">
