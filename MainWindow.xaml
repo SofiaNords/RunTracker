@@ -9,8 +9,6 @@
         mc:Ignorable="d"
         Title="RunTracker" Height="450" Width="800">
     <Window.Resources>
-        <converter:RunTypeToObjectIdConverter x:Key="RunTypeToObjectIdConverter"/>
-        <converter:StringToFloatConverter x:Key="StringToFloatConverter"/>
         <converter:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
     </Window.Resources>
     <Grid ShowGridLines="False">

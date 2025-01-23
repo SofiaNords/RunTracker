@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace RunTracker.Converter
 {
-    public class StringToTimeSpanConverter : IValueConverter
+    internal class TimeSpanToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -16,16 +16,19 @@ namespace RunTracker.Converter
             {
                 return timeSpan.ToString(@"hh\:mm\:ss");
             }
-            return string.Empty;
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string stringValue && TimeSpan.TryParseExact(stringValue, @"hh\:mm\:ss", culture, out TimeSpan timeSpan))
+            if (value is string strValue)
             {
-                return timeSpan;
+                if (TimeSpan.TryParse(strValue, out TimeSpan result))
+                {
+                    return result;
+                }
             }
-            return TimeSpan.Zero; // eller annan standardvärde
+            return null;
         }
     }
 }
