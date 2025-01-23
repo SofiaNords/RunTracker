@@ -22,6 +22,7 @@ namespace RunTracker.ViewModel
             set 
             { 
                 _selectedRunningSession = value;
+                RunType = _selectedRunningSession.RunType;
                 RaisePropertyChanged();
             }
         }
