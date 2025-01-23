@@ -64,7 +64,7 @@ namespace RunTracker.ViewModel
 
         public async Task UpdateRunningSessionAsync()
         {
-
+            SelectedRunningSession.Date = DateTime.SpecifyKind((DateTime)SelectedRunningSession.Date, DateTimeKind.Utc);
             SelectedRunningSession.RunType = RunType;
             try
             {

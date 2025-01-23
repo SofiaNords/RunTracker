@@ -159,7 +159,7 @@ namespace RunTracker.ViewModel
 
             var newSession = new RunningSession
             {
-                Date = (DateTime)RunningSession.Date,
+                Date = DateTime.SpecifyKind((DateTime)RunningSession.Date, DateTimeKind.Utc),
                 Distance = (decimal)RunningSession.Distance,
                 Time = (TimeSpan)RunningSession.Time,
                 RunType = RunType
