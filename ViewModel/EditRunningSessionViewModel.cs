@@ -74,7 +74,7 @@ namespace RunTracker.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ett fel uppstod vid uppdatering av löppasset: {ex.Message}");
+                MessageBox.Show($"An error occurred while updating the running session: {ex.Message}");
             }
 
 

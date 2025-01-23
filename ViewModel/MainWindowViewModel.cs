@@ -153,14 +153,14 @@ namespace RunTracker.ViewModel
         {
             if (RunningSession.Date == null || RunningSession.Distance == null || RunningSession.Time == null || RunType == null)
             {
-                MessageBox.Show("Alla fält måste fyllas i.");
+                MessageBox.Show("All fields must be filled in.");
                 return;
             }
 
             var newSession = new RunningSession
             {
                 Date = (DateTime)RunningSession.Date,
-                Distance = (float)RunningSession.Distance,
+                Distance = (decimal)RunningSession.Distance,
                 Time = (TimeSpan)RunningSession.Time,
                 RunType = RunType
             };
@@ -176,7 +176,7 @@ namespace RunTracker.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ett fel uppstod vid lagring av löppasset: {ex.Message}");
+                MessageBox.Show($"An error occurred while saving the running session: {ex.Message}");
             }
         }
 
@@ -239,7 +239,7 @@ namespace RunTracker.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Fel vid radering: {ex.Message}");
+                    MessageBox.Show($"Error during deletion: {ex.Message}");
                 }
             }
         }

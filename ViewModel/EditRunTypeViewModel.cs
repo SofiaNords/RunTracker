@@ -46,12 +46,11 @@ namespace RunTracker.ViewModel
             try
             {
                 await _runTypeRepository.UpdateAsync(SelectedRunType);
-                MessageBox.Show("Typ av löppass har uppdaterats.");
-                _dialog.Close(); // Stänger dialogrutan
+                _dialog.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ett fel uppstod vid uppdatering av typ av löppass: {ex.Message}");
+                MessageBox.Show($"An error occurred while updating the running session: {ex.Message}");
             }
         }
     }
