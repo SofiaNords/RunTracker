@@ -10,8 +10,8 @@
         Title="RunTracker" Height="450" Width="800">
     <Window.Resources>
         <converter:RunTypeToObjectIdConverter x:Key="RunTypeToObjectIdConverter"/>
-        <converter:StringToTimeSpanConverter x:Key="StringToTimeSpanConverter"/>
         <converter:StringToFloatConverter x:Key="StringToFloatConverter"/>
+        <converter:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
     </Window.Resources>
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -31,7 +31,8 @@
                 <Label Content="Date:" Width="150"/>
                 <DatePicker SelectedDateFormat="Short" 
                             FirstDayOfWeek="Monday"
-                            SelectedDate="{Binding RunningSession.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            SelectedDate="{Binding RunningSession.Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            Width="200"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
@@ -43,7 +44,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <Label Content="Duration (hh:mm:ss):" Width="150"/>
-                <TextBox Text="{Binding RunningSession.Time, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                <TextBox Text="{Binding RunningSession.Time, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeSpanToStringConverter}}" Width="200"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,5">
@@ -67,8 +68,8 @@
         <StackPanel Orientation="Vertical" Margin="10" Grid.Column="1">
             <TextBlock Text="Register new Run Type" FontWeight="Bold" FontSize="16"/>
             <StackPanel Orientation="Horizontal" Margin="0,5">
-                <TextBox Text="{Binding RunTypeNew, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="25"/>
-                <Button Content="Add Run Type" Width="100" Margin="5,0" Command="{Binding AddRunTypeCommand, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding RunTypeNew, UpdateSourceTrigger=PropertyChanged}" Width="250" Height="25"/>
+                <Button Content="Add Run Type" Width="116" Margin="5,0,0,0" Command="{Binding AddRunTypeCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
             </StackPanel>
             <ListView ItemsSource="{Binding RunTypes}"
                       Height="150">
