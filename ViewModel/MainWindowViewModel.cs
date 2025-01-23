@@ -192,14 +192,19 @@ namespace RunTracker.ViewModel
         {
             if (session != null)
             {
-                try
+                var result = MessageBox.Show("Are you sure you want to delete this Running Session?", "Confirm Deletion", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                
+                if (result == MessageBoxResult.Yes)
                 {
-                    await _runningSessionRepository.DeleteAsync(session.Id);
-                    RunningSessions.Remove(session);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Fel vid radering: {ex.Message}");
+                    try
+                    {
+                        await _runningSessionRepository.DeleteAsync(session.Id);
+                        RunningSessions.Remove(session);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Fel vid radering: {ex.Message}");
+                    }
                 }
             }
         }
@@ -238,14 +243,19 @@ namespace RunTracker.ViewModel
         {
             if (runType != null)
             {
-                try
+                var result = MessageBox.Show("Are you sure you want to delete this RunType?", "Confirm Deletion", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
                 {
-                    await _runTypeRepository.DeleteAsync(runType.Id);
-                    RunTypes.Remove(runType);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error during deletion: {ex.Message}");
+                    try
+                    {
+                        await _runTypeRepository.DeleteAsync(runType.Id);
+                        RunTypes.Remove(runType);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error during deletion: {ex.Message}");
+                    }
                 }
             }
         }
