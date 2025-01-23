@@ -99,9 +99,8 @@ namespace RunTracker.ViewModel
             OpenEditRunTypeDialogCommand = new DelegateCommand(async (parameter) => OpenEditRunTypeDialog(parameter as RunType));
             
             ConnectToDatabase();
-            //InitializeDefaultRunTypes().Wait();
-            LoadRunningSessions();
-            LoadRunTypes();
+            InitializeDefaultRunTypes();
+            
         }
 
 
@@ -112,19 +111,20 @@ namespace RunTracker.ViewModel
             _runTypeRepository = new RunTypeRepository(_databaseService.Database);
         }
 
-        //private async Task InitializeDefaultRunTypes()
-        //{
-        //    var existingRunTypes = await _runTypeRepository.GetAllAsync();
-        //    if (!existingRunTypes.Any())
-        //    {
-        //        var trainingRunType = new RunType { Name = "Training" };
-        //        var raceRunType = new RunType { Name = "Race" };
-        //        await _runTypeRepository.AddAsync(trainingRunType);
-        //        await _runTypeRepository.AddAsync(raceRunType);
-        //    }
+        private async Task InitializeDefaultRunTypes()
+        {
+            var existingRunTypes = await _runTypeRepository.GetAllAsync();
+            if (!existingRunTypes.Any())
+            {
+                var trainingRunType = new RunType { Name = "Training" };
+                var raceRunType = new RunType { Name = "Race" };
+                await _runTypeRepository.AddAsync(trainingRunType);
+                await _runTypeRepository.AddAsync(raceRunType);
+            }
 
-        //    LoadRunningSessions();
-        //}
+            await LoadRunningSessions();
+            await LoadRunTypes();
+        }
 
         private async Task LoadRunningSessions()
         {
