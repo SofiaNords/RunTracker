@@ -35,7 +35,22 @@ namespace RunTracker.ViewModel
                 {
                     _runningSession = value;
                     RaisePropertyChanged();
+                    UpdateCanAddRunningSession();
                 } 
+            }
+        }
+
+        private bool _canAddRunningSession;
+        public bool CanAddRunningSession
+        {
+            get { return _canAddRunningSession; }
+            set
+            {
+                if (_canAddRunningSession != value)
+                {
+                    _canAddRunningSession = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -50,6 +65,7 @@ namespace RunTracker.ViewModel
                 {
                     _runType = value;
                     RaisePropertyChanged();
+                    UpdateCanAddRunningSession();
                 }
             }
         }
@@ -63,7 +79,22 @@ namespace RunTracker.ViewModel
                 if (_runTypeNew != value)
                 {
                     _runTypeNew = value;
-                    RaisePropertyChanged(); 
+                    RaisePropertyChanged();
+                    UpdateCanAddRunType();
+                }
+            }
+        }
+
+        private bool _canAddRunType;
+        public bool CanAddRunType
+        {
+            get { return _canAddRunType; }
+            set
+            {
+                if (_canAddRunType != value)
+                {
+                    _canAddRunType = value;
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -149,14 +180,16 @@ namespace RunTracker.ViewModel
             }
         }
 
+        private void UpdateCanAddRunningSession()
+        {
+            CanAddRunningSession = RunningSession.Date != null &&
+                                   RunningSession.Distance != null &&
+                                   RunningSession.Time != null &&
+                                   RunType != null;
+        }
+
         private async Task AddRunningSessionAsync()
         {
-            if (RunningSession.Date == null || RunningSession.Distance == null || RunningSession.Time == null || RunType == null)
-            {
-                MessageBox.Show("All fields must be filled in.");
-                return;
-            }
-
             var newSession = new RunningSession
             {
                 Date = DateTime.SpecifyKind((DateTime)RunningSession.Date, DateTimeKind.Utc),
@@ -209,6 +242,10 @@ namespace RunTracker.ViewModel
             }
         }
 
+        private void UpdateCanAddRunType()
+        {
+            CanAddRunType = !string.IsNullOrWhiteSpace(RunTypeNew);
+        }
 
         private async Task AddRunTypeAsync()
         {

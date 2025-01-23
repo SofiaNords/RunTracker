@@ -59,7 +59,8 @@
                         Width="200"
                         Padding="5"
                         Margin="0,5,5,0"
-                        Command="{Binding AddRunningSessionCommand}"/>
+                        Command="{Binding AddRunningSessionCommand}"
+                        IsEnabled="{Binding CanAddRunningSession}"/>
             </StackPanel>
         </StackPanel>
 
@@ -67,7 +68,11 @@
             <TextBlock Text="Register new Run Type" FontWeight="Bold" FontSize="16"/>
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <TextBox Text="{Binding RunTypeNew, UpdateSourceTrigger=PropertyChanged}" Width="250" Height="25"/>
-                <Button Content="Add Run Type" Width="116" Margin="5,0,0,0" Command="{Binding AddRunTypeCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
+                <Button Content="Add Run Type" Width="116" 
+                        Margin="5,0,0,0" 
+                        Command="{Binding AddRunTypeCommand, UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="{Binding CanAddRunType}"
+                        HorizontalAlignment="Right"/>
             </StackPanel>
             <ListView ItemsSource="{Binding RunTypes}"
                       Height="150">
