@@ -19,7 +19,7 @@
                             FirstDayOfWeek="Monday"
                             SelectedDate="{Binding SelectedRunningSession.Date}"/>
                 <Label Content="Distance (km):"/>
-                <TextBox Text="{Binding SelectedRunningSession.Distance, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding SelectedRunningSession.Distance, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                 <Label Content="Duration (hh:mm:ss):"/>
                 <TextBox Text="{Binding SelectedRunningSession.Time, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="Run Type:"/>

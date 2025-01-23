@@ -95,10 +95,11 @@ namespace RunTracker.ViewModel
             DeleteRunTypeCommand = new DelegateCommand(async (parameter) => await DeleteRunTypeAsync(parameter as RunType));
 
             OpenEditRunningSessionDialogCommand = new DelegateCommand(async (parameter) => OpenEditRunningSessionDialog(parameter as RunningSession));
+            
             OpenEditRunTypeDialogCommand = new DelegateCommand(async (parameter) => OpenEditRunTypeDialog(parameter as RunType));
             
-
             ConnectToDatabase();
+            //InitializeDefaultRunTypes().Wait();
             LoadRunningSessions();
             LoadRunTypes();
         }
@@ -110,6 +111,20 @@ namespace RunTracker.ViewModel
             _runningSessionRepository = new RunningSessionRepository(_databaseService.Database);
             _runTypeRepository = new RunTypeRepository(_databaseService.Database);
         }
+
+        //private async Task InitializeDefaultRunTypes()
+        //{
+        //    var existingRunTypes = await _runTypeRepository.GetAllAsync();
+        //    if (!existingRunTypes.Any())
+        //    {
+        //        var trainingRunType = new RunType { Name = "Training" };
+        //        var raceRunType = new RunType { Name = "Race" };
+        //        await _runTypeRepository.AddAsync(trainingRunType);
+        //        await _runTypeRepository.AddAsync(raceRunType);
+        //    }
+
+        //    LoadRunningSessions();
+        //}
 
         private async Task LoadRunningSessions()
         {
